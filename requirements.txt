@@ -1,3 +1,4 @@
 selenium
 requests
 poe-api
+webdriver_manager
