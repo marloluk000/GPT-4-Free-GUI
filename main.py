@@ -4,7 +4,6 @@ import string
 import time
 import sys
 import re
-import os
 from selenium import webdriver     
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
@@ -14,13 +13,9 @@ from selenium.webdriver.support import expected_conditions as EC
 import poe
 import streamlit as st
 import os, sys
+from webdriver_manager.firefox import GeckoDriverManager
 
 
-@st.experimental_singleton
-def installff():
-  os.system('sbase install geckodriver')
-  os.system('ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver')
-_ = installff()
 message = ""
 trace = True
 options=Options()
@@ -33,7 +28,8 @@ trace = True
 def get_browser():
     global browser
     options.add_argument("--headless")
-    browser = webdriver.Firefox(options=options)
+    service = Service(GeckoDriverManager().install())
+    browser = webdriver.Firefox(options=options,service=service,)
     return browser
 
 def login(email):
